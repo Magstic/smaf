@@ -212,7 +212,7 @@ impl<'a> Parse<&'a [u8]> for PCMAudioTrack<'a> {
                 let sampling_freq = match sampling_freq {
                     0 => 4000,
                     1 => 8000,
-                    2 => 11000,
+                    2 => 11025,
                     3 => 22050,
                     4 => 44100,
                     _ => panic!("Invalid sampling frequency {}", sampling_freq),
@@ -234,5 +234,22 @@ impl<'a> Parse<&'a [u8]> for PCMAudioTrack<'a> {
                 })
             },
         )(data)
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use nom_derive::Parse;
+
+    use super::PCMAudioTrack;
+
+    #[test]
+    fn sampling_rate_code_two_is_11025_hz() {
+        // format=HandyPhone, sequence=stream, mono signed PCM, rate code=2,
+        // 8-bit base, 1 ms duration/gate timebases, no subchunks.
+        let raw = [0x00, 0x00, 0x02, 0x10, 0x00, 0x00];
+        let (_, track) = PCMAudioTrack::parse(&raw).unwrap();
+        assert_eq!(track.sampling_freq, 11025);
     }
 }

@@ -11,3 +11,4 @@ tokio = { version = "^1.52", features = ["rt", "macros", "time"], default-featur
 
 smaf = { path = "../smaf" }
 smaf_player = { path = "../smaf_player" }
+smaf_renderer = { path = "../smaf_renderer" }

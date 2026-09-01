@@ -736,6 +736,7 @@ dependencies = [
  "rodio",
  "smaf",
  "smaf_player",
+ "smaf_renderer",
  "tokio",
 ]
 
@@ -744,6 +745,13 @@ name = "smaf_player"
 version = "0.1.0"
 dependencies = [
  "smaf",
+]
+
+[[package]]
+name = "smaf_renderer"
+version = "0.1.0"
+dependencies = [
+ "smaf_player",
 ]
 
 [[package]]
